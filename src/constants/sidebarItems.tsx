@@ -14,7 +14,7 @@ export const sidebarItems = (role: string) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: "Profile",
-      key: "profile",
+      key: "profile",  
       icon: <ProfileOutlined />,
       children: [
         {
