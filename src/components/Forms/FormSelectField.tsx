@@ -1,6 +1,7 @@
 "use client";
 
-import { Select } from "antd";
+import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
+import { Input, Select } from "antd";
 import { useFormContext, Controller } from "react-hook-form";
 
 type SelectOptions = {
@@ -9,25 +10,30 @@ type SelectOptions = {
 };
 
 type SelectFieldProps = {
-  options: SelectOptions[];
   name: string;
+  options: SelectOptions[];
   size?: "large" | "small";
   value?: string | string[] | undefined;
-  placeholder?: string;
+  defaultvalue?: SelectOptions;
   label?: string;
-  defaultValue?: SelectOptions;
+  placeholder?: string;
 };
 
 const FormSelectField = ({
   name,
   size = "large",
   value,
-  placeholder = "select",
-  options,
   label,
-  defaultValue,
+  options,
+  defaultvalue,
+  placeholder,
 }: SelectFieldProps) => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  const errorMessage = getErrorMessageByPropertyName(errors, name);
 
   return (
     <>
@@ -38,14 +44,14 @@ const FormSelectField = ({
         render={({ field: { value, onChange } }) => (
           <Select
             onChange={onChange}
-            size={size}
             options={options}
             value={value}
-            style={{ width: "100%" }}
+            size={size}
             placeholder={placeholder}
           />
         )}
       />
+      <small style={{ color: "red" }}>{errorMessage}</small>
     </>
   );
 };

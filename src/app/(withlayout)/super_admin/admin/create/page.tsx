@@ -58,6 +58,7 @@ const CreateAdminPage = () => {
                 marginBottom: "10px",
               }}
             >
+              {" "}
               Admin Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
