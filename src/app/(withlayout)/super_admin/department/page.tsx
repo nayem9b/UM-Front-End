@@ -5,6 +5,7 @@ import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTable from "@/components/ui/UMTable";
 import { useDepartmentsQuery } from "@/redux/api/departmentApi";
 import { useDebounced } from "@/redux/hooks";
+import dayjs from "dayjs";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -50,8 +51,9 @@ const ManageDepartmentPage = () => {
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
-      // key: "age",
-      // sorter: true,
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
       sorter: (a: any, b: any) => b.age - a.age,
     },
     {
@@ -59,18 +61,17 @@ const ManageDepartmentPage = () => {
       render: function (data: any) {
         return (
           <div>
-            <Button type="primary" onClick={() => console.log(data)}>
-              <EyeOutlined />
-            </Button>
-            <Button
-              style={{
-                margin: "0px 5px",
-              }}
-              type="primary"
-              onClick={() => console.log(data)}
-            >
-              <EditOutlined />
-            </Button>
+            <Link href={`/super_admin/department/edit/${data?.id}`}>
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                type="primary"
+                onClick={() => console.log(data)}
+              >
+                <EditOutlined />
+              </Button>
+            </Link>
             <Button type="primary" onClick={() => console.log(data)} danger>
               <DeleteOutlined />
             </Button>
