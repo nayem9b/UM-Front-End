@@ -37,9 +37,9 @@ const CreateStudentPage = () => {
     <div>
       <h1>Create Student</h1>
       <StepperForm
-        // submitHandler={(value) => {
-        //   handleStudentSubmit(value);
-        // }}
+        submitHandler={(value) => {
+          handleStudentSubmit(value);
+        }}
         steps={steps}
       />
     </div>
