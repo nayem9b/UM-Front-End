@@ -21,6 +21,7 @@ export type IGenericErrorMessage = {
 };
 
 export interface IDepartment {
+  map(arg0: (department: any) => { label: any; value: any; }): unknown;
   id: string;
   title: string;
   createdAt: string;
