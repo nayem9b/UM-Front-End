@@ -4,7 +4,7 @@ import { baseApi } from "./baseApi";
 
 const DEPARTMENT_URL = "/management-departments";
 
-export const departmentApi = baseApi.injectEndpoints({
+export const departmentApi: any = baseApi.injectEndpoints({
   endpoints: (build) => ({
     departments: build.query({
       query: (arg: Record<string, any>) => ({
@@ -47,6 +47,14 @@ export const departmentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.department],
     }),
+    //Delete single department
+    deleteDepartment: build.mutation({
+      query: (id) => ({
+        url: `${DEPARTMENT_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.department],
+    }),
   }),
 });
 
@@ -55,4 +63,5 @@ export const {
   useDepartmentQuery,
   useUpdateDepartmentMutation,
   useAddDepartmentMutation,
+  useDeleteDepartmentMutation,
 } = departmentApi;

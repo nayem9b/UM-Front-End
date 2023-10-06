@@ -3,7 +3,10 @@
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTable from "@/components/ui/UMTable";
-import { useDepartmentsQuery } from "@/redux/api/departmentApi";
+import {
+  useDeleteDepartmentMutation,
+  useDepartmentsQuery,
+} from "@/redux/api/departmentApi";
 import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 import {
@@ -12,7 +15,7 @@ import {
   EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -29,6 +32,8 @@ const ManageDepartmentPage = () => {
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
+  const [deleteDepartment] = useDeleteDepartmentMutation();
+
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -42,6 +47,18 @@ const ManageDepartmentPage = () => {
 
   const departments = data?.departments;
   const meta = data?.meta;
+
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting");
+    try {
+      await deleteDepartment(id);
+      message.success("Department Updated successfully");
+    } catch (err: any) {
+      console.error(err.message);
+      message.error(err.message);
+    }
+  };
+
   const columns = [
     {
       title: "Title",
@@ -72,7 +89,11 @@ const ManageDepartmentPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button type="primary" onClick={() => console.log(data)} danger>
+            <Button
+              type="primary"
+              onClick={() => deleteHandler(data?.id)}
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </div>
