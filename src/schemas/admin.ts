@@ -9,7 +9,7 @@ export const adminSchema = yup.object().shape({
             lastName: yup.string().required("Last name is required"),
         }),
         email: yup.string().email().required("Email is required"),
+        dateOfBirth: yup.string().required("Date of Birth is required"),
         designation: yup.string().required("Designation is required"),
-        dateOfBirth: yup.string().required("Date of Birth is required")
     })
 })
